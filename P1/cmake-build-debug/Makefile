@@ -123,6 +123,33 @@ P1/fast:
 	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/build
 .PHONY : P1/fast
 
+mach0.o: mach0.cpp.o
+
+.PHONY : mach0.o
+
+# target to build an object file
+mach0.cpp.o:
+	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/mach0.cpp.o
+.PHONY : mach0.cpp.o
+
+mach0.i: mach0.cpp.i
+
+.PHONY : mach0.i
+
+# target to preprocess a source file
+mach0.cpp.i:
+	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/mach0.cpp.i
+.PHONY : mach0.cpp.i
+
+mach0.s: mach0.cpp.s
+
+.PHONY : mach0.s
+
+# target to generate assembly for a file
+mach0.cpp.s:
+	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/mach0.cpp.s
+.PHONY : mach0.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... P1"
+	@echo "... mach0.o"
+	@echo "... mach0.i"
+	@echo "... mach0.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

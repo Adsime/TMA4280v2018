@@ -8,7 +8,6 @@
 class zeta0 {
 
 public:
-
     double riemann_zeta(long n);
 };
 

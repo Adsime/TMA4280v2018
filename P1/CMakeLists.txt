@@ -3,4 +3,4 @@ project(P1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(P1 main.cpp zeta0.cpp zeta0.h)
+add_executable(P1 main.cpp zeta0.cpp zeta0.h mach0.cpp mach0.h)
