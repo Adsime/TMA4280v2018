@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/main.cpp.dir/zeta0.cpp.o  -o main.cpp 

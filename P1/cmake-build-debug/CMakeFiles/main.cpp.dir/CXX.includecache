@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.cpp
+zeta0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.h
+math.h
+-
+
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.h
+
