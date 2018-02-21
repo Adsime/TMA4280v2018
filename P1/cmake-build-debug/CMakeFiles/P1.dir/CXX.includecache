@@ -6,27 +6,31 @@
 
 #IncludeRegexTransform: 
 
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0.cpp
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/mach0.cpp
 mach0.h
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/mach0.h
 math.h
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/math.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/math.h
 
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/mach0.h
 
 /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/main.cpp
 iostream
 -
-zeta0.h
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.h
-mach0.h
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0.h
+zeta0/zeta0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0/zeta0.h
+mach0/mach0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/mach0.h
 
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.cpp
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0/zeta0.cpp
 zeta0.h
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0/zeta0.h
 math.h
 -
+iostream
+-
+omp.h
+-
 
-/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.h
+/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0/zeta0.h
 

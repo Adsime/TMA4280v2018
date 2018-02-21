@@ -84,19 +84,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0.cpp">
+		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/mach0.cpp">
 			<Option target="P1"/>
 		</Unit>
-		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0.h">
+		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/mach0/mach0.h">
 			<Option target="P1"/>
 		</Unit>
 		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/main.cpp">
 			<Option target="P1"/>
 		</Unit>
-		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.cpp">
+		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0/zeta0.cpp">
 			<Option target="P1"/>
 		</Unit>
-		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0.h">
+		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/zeta0/zeta0.h">
 			<Option target="P1"/>
 		</Unit>
 		<Unit filename="/home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/CMakeLists.txt">

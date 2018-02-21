@@ -9,6 +9,7 @@
 class mach0 {
 public:
     double machin_formula(long n, double x);
+    double arctan(long i, double x);
 };
 
 
