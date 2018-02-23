@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/P1.dir/main.cpp.o CMakeFiles/P1.dir/zeta0/zeta0.cpp.o CMakeFiles/P1.dir/mach0/mach0.cpp.o  -o P1 
+/usr/bin/c++  -g   CMakeFiles/P1.dir/zeta0/zeta0.cpp.o CMakeFiles/P1.dir/mach0/mach0.cpp.o CMakeFiles/P1.dir/zeta0/zeta0utest.cpp.o  -o P1 

@@ -123,87 +123,6 @@ P1/fast:
 	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/build
 .PHONY : P1/fast
 
-mach0/mach0.o: mach0/mach0.cpp.o
-
-.PHONY : mach0/mach0.o
-
-# target to build an object file
-mach0/mach0.cpp.o:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/mach0/mach0.cpp.o
-.PHONY : mach0/mach0.cpp.o
-
-mach0/mach0.i: mach0/mach0.cpp.i
-
-.PHONY : mach0/mach0.i
-
-# target to preprocess a source file
-mach0/mach0.cpp.i:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/mach0/mach0.cpp.i
-.PHONY : mach0/mach0.cpp.i
-
-mach0/mach0.s: mach0/mach0.cpp.s
-
-.PHONY : mach0/mach0.s
-
-# target to generate assembly for a file
-mach0/mach0.cpp.s:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/mach0/mach0.cpp.s
-.PHONY : mach0/mach0.cpp.s
-
-main.o: main.cpp.o
-
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/main.cpp.s
-.PHONY : main.cpp.s
-
-zeta0/zeta0.o: zeta0/zeta0.cpp.o
-
-.PHONY : zeta0/zeta0.o
-
-# target to build an object file
-zeta0/zeta0.cpp.o:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/zeta0/zeta0.cpp.o
-.PHONY : zeta0/zeta0.cpp.o
-
-zeta0/zeta0.i: zeta0/zeta0.cpp.i
-
-.PHONY : zeta0/zeta0.i
-
-# target to preprocess a source file
-zeta0/zeta0.cpp.i:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/zeta0/zeta0.cpp.i
-.PHONY : zeta0/zeta0.cpp.i
-
-zeta0/zeta0.s: zeta0/zeta0.cpp.s
-
-.PHONY : zeta0/zeta0.s
-
-# target to generate assembly for a file
-zeta0/zeta0.cpp.s:
-	$(MAKE) -f CMakeFiles/P1.dir/build.make CMakeFiles/P1.dir/zeta0/zeta0.cpp.s
-.PHONY : zeta0/zeta0.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -213,15 +132,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... P1"
-	@echo "... mach0/mach0.o"
-	@echo "... mach0/mach0.i"
-	@echo "... mach0/mach0.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... zeta0/zeta0.o"
-	@echo "... zeta0/zeta0.i"
-	@echo "... zeta0/zeta0.s"
 .PHONY : help
 
 
