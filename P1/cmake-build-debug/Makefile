@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/shomeb/a/adriasm/Desktop/clion/clion-2017.3.3/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/adrian/CLion/clion-2017.3.3/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/shomeb/a/adriasm/Desktop/clion/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
+RM = /home/adrian/CLion/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1
+CMAKE_SOURCE_DIR = /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Super
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/shomeb/a/adriasm/Desktop/clion/clion-2017.3.3/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/adrian/CLion/clion-2017.3.3/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/shomeb/a/adriasm/Desktop/clion/clion-2017.3.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/adrian/CLion/clion-2017.3.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug/CMakeFiles /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug/CMakeFiles /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

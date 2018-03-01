@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/shomeb/a/adriasm/Desktop/clion/clion-2017.3.3/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/adrian/CLion/clion-2017.3.3/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/shomeb/a/adriasm/Desktop/clion/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
+RM = /home/adrian/CLion/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1
+CMAKE_SOURCE_DIR = /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/P1.dir/depend.make
@@ -66,6 +66,6 @@ CMakeFiles/P1.dir/clean:
 .PHONY : CMakeFiles/P1.dir/clean
 
 CMakeFiles/P1.dir/depend:
-	cd /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1 /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1 /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug /home/shomeb/a/adriasm/Documents/School/Year2/Semester2/Supercomputers/TMA4280v2018/P1/cmake-build-debug/CMakeFiles/P1.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1 /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1 /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug /home/adrian/NTNU/semester_2/superdatamaskiner/assignments/TMA4280v2018/P1/cmake-build-debug/CMakeFiles/P1.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/P1.dir/depend
 
