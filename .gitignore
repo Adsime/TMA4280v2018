@@ -5,6 +5,7 @@
 build
 .idea
 cmake-build-debug
+CMakeLists.txt
 
 # Compiled Object files
 *.slo
