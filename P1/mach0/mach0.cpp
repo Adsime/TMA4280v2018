@@ -3,13 +3,11 @@
 //
 
 #include "iostream"
-#include "functions.cpp"
+#include "../global/functions.cpp"
 
 using namespace std;
+using namespace mach;
 
 int main(int args, char* argv[]) {
-    int n = atoi(argv[1]);
-    if(n < 1) exit(1);
-    double res = (4*machin_formula(n, 1.0/5.0) - machin_formula(n, 1.0/239.0));
-    cout << "n = " << n << ". PI ~ " << 4 * res << endl;
+    start(argv[1]);
 }

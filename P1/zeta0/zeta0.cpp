@@ -3,14 +3,11 @@
 //
 
 #include "iostream"
-#include "functions.cpp"
+#include "../global/functions.cpp"
 
 using namespace std;
+using namespace zeta;
 
 int main(int args, char* argv[]) {
-    int n = atoi(argv[1]);
-    if(n < 1) exit(1);
-    double res = riemann_zeta(n);
-    res = fix_to_pi(res);
-    cout << "n = " << n << ". PI ~ " << res << endl;
+    start(argv[1]);
 }
