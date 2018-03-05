@@ -46,6 +46,18 @@ namespace mach {
         return pow(-1.0, i-1.0) * (pow(x, modifier)/modifier);
     }
 
+    double mod_machin(long n, double x, int processCount = 1, int process = 0) {
+        double res = 0.0;
+        int interv = n/processCount;
+        for(long i = (process * interv) + 1; i <= (process + 1) * interv && i <= n; i++) {
+            res += step(i, x);
+        }
+        int rest = n % processCount;
+        if(processCount < n && rest > 0 && process < rest) {
+            res += step(n - rest + process + 1, x);
+        }
+    }
+
     double machin_formula(long n, double x, int processCount = 1, int process = 0) {
         if(n < 1) return -1;
         double res = 0.0;

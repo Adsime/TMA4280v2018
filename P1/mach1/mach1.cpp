@@ -22,7 +22,7 @@ int main(int args, char* argv[]) {
     if(rank == 0) {
         time = MPI_Wtime();
     }
-    double res = 4 * machin_formula(intervals, a, nprocs, rank) - machin_formula(intervals, b, nprocs, rank);
+    double res = (4 * mod_machin(intervals, a, nprocs, rank)) - mod_machin(intervals, b, nprocs, rank);
     finish(&res, rank, false);
     if(rank == 0) {
         cout << "Time elapsed in ms: " << (MPI_Wtime() - time)*1000 << endl;
