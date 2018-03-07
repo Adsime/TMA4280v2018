@@ -1,0 +1,16 @@
+Question 6:
+	My tests show that Zeta for 1000 iterations give different results between single, 2 and 8 processes.
+
+	My tests show that for mach, I get the same results for 1000 iterations and 100 iterations for singe, 2 and
+	8 processes. However, if I reduce the iterations down to 10, I do observe some minor difference in the results.
+	For a single process, the results are still consistent with 100 and 1000 iterations. The consistency in the single
+	process results, I think might have to do with the fact that the mach method is very quick to converge.
+	Earlier tests show that only 3 iterations will give a result with an estimation correct down to 3 decimal places.
+	Following that argument, it makes sense that the results all do converge when the iterations go above a certain
+	threshold. This threshold marks the point of where the double precision is reached. Any values of the function
+	from this point will be viewed as noise and is ignored in the result.
+
+
+
+	Zeta on the other hand takes a lot more iterations to converge. This means there has to be a higher amount of
+	float operations to get the sum, thereby a higher chance of numerical inaccuracy in the floating point numbers.

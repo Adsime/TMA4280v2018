@@ -27,21 +27,19 @@ six:
 	mpiCC -std=c++11 zeta1/zeta1.cpp -o build/zeta1
 	g++ -std=c++11 mach0/tests.cpp -o build/mach_tests
 	g++ -std=c++11 zeta0/tests.cpp -o build/zeta_tests
-	echo "Zeta singel:"
+	@echo "\n\nZeta single:"
 	./build/zeta_tests e 1000
-	echo "\n\nZeta multi:"
-	mpirun -np 2 ./build/zeta1 10000
-	mpirun -np 4 ./build/zeta1 10000
-	mpirun -np 8 ./build/zeta1 10000
-	mpirun -np 16 ./build/zeta1 10000
-	mpirun -np 32 ./build/zeta1 10000
-	echo "\n\nMach single:"
-	./build/mach_tests e 1000
-	echo "\n\nMach multi:"
+
+
+	@echo "\n\nZeta multi:"
+	mpirun -np 2 ./build/zeta1 1000
+	mpirun -np 8 ./build/zeta1 1000
+
+
+	@echo "\n\nMach single:"
+	./build/mach_tests e 100
+
+
+	@echo "\n\nMach multi:"
 	mpirun -np 2 ./build/mach1 100
-	mpirun -np 4 ./build/mach1 100
 	mpirun -np 8 ./build/mach1 100
-	mpirun -np 16 ./build/mach1 100
-	mpirun -np 32 ./build/mach1 100
-	mpirun -np 64 ./build/mach1 100
-	mpirun -np 128 ./build/mach1 100

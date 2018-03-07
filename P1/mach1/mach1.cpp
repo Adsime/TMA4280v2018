@@ -24,6 +24,7 @@ int main(int args, char* argv[]) {
     }
     double res = (4 * mod_machin(intervals, a, nprocs, rank)) - mod_machin(intervals, b, nprocs, rank);
     finish(&res, rank, false);
+    cout << rank << " " << res << endl;
     if(rank == 0) {
         cout << "Time elapsed in ms: " << (MPI_Wtime() - time)*1000 << endl;
     }

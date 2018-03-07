@@ -33,7 +33,7 @@ void vtest() {
 }
 
 void etest(int iter) {
-    cout << "Zeta single p error: " << fabs(M_PI - fix_to_pi(riemann_zeta(iter))) << endl;
+    cout << setprecision(60) << "Zeta single p error: " << fabs(M_PI - fix_to_pi(riemann_zeta(iter))) << endl;
 }
 
 int main(int args, char* argv[]) {
