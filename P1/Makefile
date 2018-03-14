@@ -77,9 +77,3 @@ nine:
 	mpiCC -std=c++11 -fopenmp hybrid/zeta_hybrid.cpp -o build/zeta_hybrid
 	mpirun -np 4 ./build/mach_hybrid 10000 8
 	mpirun -np 4 ./build/zeta_hybrid 10000 8
-
-ten:
-	mpiCC -std=c++11 -fopenmp hybrid/mach_hybrid.cpp -o build/mach_hybrid
-	mpiCC -std=c++11 mach1/mach1.cpp -o build/mach1
-	mpirun -np 2 ./build/mach_hybrid 10000 8
-	mpirun -np 4 ./build/mach1 10000
