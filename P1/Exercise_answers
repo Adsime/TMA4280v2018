@@ -1,16 +1,93 @@
+Question 1:
+	Write "make test" in the terminal and press enter.
+
+Question 2:
+	Write "make utest" in the terminal and press enter.
+
+	When working with parallel programs, there comes the issue of merging the processes once they are done executing,
+	or even while they are executing. This can lead to numerical inaccuracies by for example merging two values
+	of major difference in exponents. Tests will discover these, enabling the programmer to possibly make adjustments.
+	Tests can show if some processes do more work, therefore bottle necking the rest.
+
+
+Question 3:
+	It's clear that mach converges faster, but it's also exponentially slower over increasing iterations compared to
+	zeta. Zeta on the other hand is slower to converge, but runs all from k = 1 .. 24 within a second. Compared to mach
+	this is about 8 times faster. However, mach seems to converge when k = 4, where zeta still hasn't converged after
+	2^24 iterations.
+
+Question 4:
+	Process 0 has to do most of the work with this implementation. Rather than distributing the tougher work (zeta
+	and mach calculations) over all the processes, process 0 has to do the work and the other processes only add the
+	results together. If one were to flip this hierarchy around, so that more processes does the heavy work and one
+	process takes care of the final adding, the program should run considerably faster. To optimize this even further,
+	one can look at different ways of batching the work. One obvious and easy (and possibly naive) way is to batch
+	the work into equal loads and send them off to each process (p0 takes [0-99], p1 takes [100-199], ...).
+	A faster implementation could be to have a master process, like the one suggested, but make it dispatch work
+	as processes becomes available. This ensures that no process bottle necks the others more than the execution time
+	of the last process. This is given that there are only so many processes, and that they don't finish before the
+	master process can distribute more work. I will use an implementation which makes leaps over the data based on the
+	number of processes to reduce the possible inaccuracy of adding number of large difference in exponents.
+
+Question 5:
+
+	I used MPI_Init to initialize MPI.
+	I used MPI_Comm_Size to get the number of processes it has available to used, which was
+	defined when running the program.
+	I used MPI_Comm_Rank to get the current process rank (0 though n-1).
+	I used MPI_Reduce to add all values to a common variable 'res'
+	Finally I used MPI_Finalize to exit all processes.
+
+	To calculate the wall time, I used the inbuilt method MPI_Wtime(). This method returns the current time in
+	seconds, so when I subtract the time recorded at the start from the current time, I multiply by 1000 to get
+	the elapsed time in milliseconds.
+
 Question 6:
 	My tests show that Zeta for 1000 iterations give different results between single, 2 and 8 processes.
 
-	My tests show that for mach, I get the same results for 1000 iterations and 100 iterations for singe, 2 and
+	My tests show that for mach, I get the same results for 1000 iterations and 100 iterations for single, 2 and
 	8 processes. However, if I reduce the iterations down to 10, I do observe some minor difference in the results.
 	For a single process, the results are still consistent with 100 and 1000 iterations. The consistency in the single
 	process results, I think might have to do with the fact that the mach method is very quick to converge.
 	Earlier tests show that only 3 iterations will give a result with an estimation correct down to 3 decimal places.
 	Following that argument, it makes sense that the results all do converge when the iterations go above a certain
-	threshold. This threshold marks the point of where the double precision is reached. Any values of the function
-	from this point will be viewed as noise and is ignored in the result.
-
-
+	threshold.
 
 	Zeta on the other hand takes a lot more iterations to converge. This means there has to be a higher amount of
 	float operations to get the sum, thereby a higher chance of numerical inaccuracy in the floating point numbers.
+
+	The reason why we get different answers is because of numerical rounding errors. If at some point there is a number
+	with recurring binary representation (1/10 = 0.00011001100110011...), there is bound to be a rounding error
+	which will be showing in the result.
+
+	Some of these errors do however seem to be smoothed out over time, as we can observe the consistency in answers
+	over a large amount of iterations.
+
+	There are however some cases where the answer equals exactly the static number for PI in the math library of C++.
+	I believe this is due to a similar rounding error as explained above.
+
+	There is one last behaviour I have observed: Some processes seem to store values far exceeding the numerical
+	precision of a double. From what I can tell, they don't seem to have any impact on the final result, making them
+	only noise in the data.
+
+Question 7:
+	Apart from all processes saving the result, I don't see any difference in performance between the MPI_Reduce,
+	MPI_Allreduce and the recursive implementation.
+	The result seems to also stay the same, which is expected.
+
+Question 8:
+	For Zeta, I do observe the same tendency as in question 6. All seem to have different values. They are however not
+	the same as they were in question 6.
+
+	My observations for mach differ from what I expected. From what I have seen so far, it converges quickly to a
+	constant value. It seems to converge to a different value than it did in task 6. The error is greater than
+	what it used to be. This might be explained with numerical inaccuracies. This would make sense, as even though the
+	work is split among roughly the same amount of processes, the threads within those again makes the difference
+	in exponent size large so that when the process goes to gather each value, the final sum might turn out to be
+	wrong.
+
+Question 9:
+
+Question 10:
+
+Question 11:

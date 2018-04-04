@@ -9,6 +9,8 @@
 #include "vector"
 #include "iostream"
 #include "iomanip"
+#include "filehandler.cpp"
+#include <sstream>
 
 using namespace std;
 
@@ -50,11 +52,11 @@ namespace mach {
         double res = 0.0;
         int interv = n/processCount;
         for(long i = (process * interv) + 1; i <= (process + 1) * interv && i <= n; i++) {
-            res += step(i, x);
+            res += mach::step(i, x);
         }
         int rest = n % processCount;
         if(processCount < n && rest > 0 && process < rest) {
-            res += step(n - rest + process + 1, x);
+            res += mach::step(n - rest + process + 1, x);
         }
     }
 
@@ -62,9 +64,8 @@ namespace mach {
         if(n < 1) return -1;
         double res = 0.0;
         for(long i = process+1; i <= n; i += processCount) {
-            res += step(i, x);
+            res += mach::step(i, x);
         }
-        cout << setprecision(60) << res << endl;
         return res;
     }
 
@@ -79,6 +80,42 @@ namespace mach {
         cout << "n = " << n << ". PI ~ " << fix_to_pi(res) << endl;
         return res;
     }
+}
+
+void utest(bool isZeta) {
+    double test_case;
+    double res;
+    if(isZeta) {
+        test_case = 49.0/36.0;
+        res = zeta::riemann_zeta(3);
+    } else {
+        res = (4*mach::machin_formula(3, 1.0/5.0) - mach::machin_formula(3, 1.0/239.0));
+        test_case = 37012.0/46875.0 - 48941844013.0/11697168977985.0;
+    }
+    cout << "Test = " << test_case << ". Actual = " << res << endl;
+    cout << "Actual equality = " << ((res == test_case) ? "True" : "False") << endl;
+}
+
+void vtest(bool isZeta) {
+    string fct = (isZeta ? "Zeta" : "Mach");
+    task(test_path, true, "Exercise 3 - VTest: " + fct);
+    for(int i = 1; i <= 24; i++) {
+        long n = pow(2, i);
+        ostringstream text;
+        text << "For n = " << n << " (2^" << i << ") ";
+        text << fabs(M_PI - (isZeta ? zeta::fix_to_pi(zeta::riemann_zeta(n)) :
+                                      mach::fix_to_pi(4*mach::machin_formula(n, 1.0/5.0)
+                                                      - mach::machin_formula(n, 1.0/239.0))));
+        write_to_file(text.str());
+    }
+    task(test_path, false, "Exercise 3 - VTest: " + fct);
+}
+
+void etest(int iter, bool isZeta) {
+    double res = isZeta ? zeta::fix_to_pi(zeta::riemann_zeta(iter)) :
+                 mach::fix_to_pi((4*mach::machin_formula(iter, 1.0/5.0) -
+                         mach::machin_formula(iter, 1.0/239.0)));
+    cout << setprecision(60) << "Mach single p error: " << fabs(M_PI - res) << endl;
 }
 
 #endif

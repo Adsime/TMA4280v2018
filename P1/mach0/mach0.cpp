@@ -3,7 +3,7 @@
 //
 
 #include "iostream"
-#include "../global/functions.cpp"
+#include "../common/functions.cpp"
 
 using namespace std;
 using namespace mach;
