@@ -3,9 +3,15 @@
 
 # Custom added
 build
-.idea
 cmake-build-debug
-CMakeLists.txt
+CMakeFiles
+.idea
+CMakeCache.txt
+libcommon.a
+Makefile
+poisson
+cmake_install.cmake
+
 
 # Compiled Object files
 *.slo
