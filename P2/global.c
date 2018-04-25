@@ -80,9 +80,9 @@ void time_stop(char method[]) {
     //printf("Time elapsed method: %s - Time %f ms\n", method, res);
 }
 
-void print_asd(real **arr, int m) {
-    for(int i = 0; i < m; i++) {
-        for(int j = 0; j < m; j++) {
+void print_asd(real **arr, int rows, int columns) {
+    for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < columns; j++) {
             printf("%f ", arr[i][j]);
         }
         printf("\n");

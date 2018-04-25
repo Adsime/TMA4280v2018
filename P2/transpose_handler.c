@@ -16,8 +16,8 @@ void init_transpose() {
         recvcounts[i] = get_to() - get_from();
         recvdispl[i] = get_from();
     }
-    printf("Rank: %d, To: %d, from: %d\n", rank, to, from);
-    /*printasd(sendcounts, "1");
+    /*printf("Rank: %d, To: %d, from: %d\n", rank, to, from);
+    printasd(sendcounts, "1");
     printasd(senddispl, "2");
     printasd(recvcounts, "3");
     printasd(recvdispl, "4");*/
@@ -29,6 +29,7 @@ void parallel_transpose(real **bt, real **b) {
 
 void printasd(int *arr, char *method) {
     printf("Method: %s. Size of arr: %d commsize: %d\n", method, sizeof(arr)/ sizeof(arr[0]), commsize);
+    printf("Size of arr: %d", sizeof(arr));
     printf("Method: %s. rank: %d: ", method, rank);
     for(int i = 0; i < commsize; i++) {
         printf("%d ", arr[i]);

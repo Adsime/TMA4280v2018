@@ -39,7 +39,7 @@ void fstinv_(real *v, int *n, real *w, int *nn);
 void time_start();
 void time_stop(char method[]);
 
-void print_asd(real **arr, int m);
+void print_asd(real **arr, int rows, int columns);
 
 void init(int argc, char **argv);
 void usage_err();

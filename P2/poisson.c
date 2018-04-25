@@ -19,6 +19,8 @@ void start() {
 
     init_transpose();
 
+    printf("asd: %d\n", get_row_count());
+
     /*
      * Grid points are generated with constant mesh size on both x- and y-axis.
      */
