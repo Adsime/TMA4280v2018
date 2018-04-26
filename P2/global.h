@@ -6,8 +6,10 @@
 #define POISSON_GLOBAL_H
 
 #include <stdio.h>
+#include <math.h>
 #include <mpi.h>
 #include <omp.h>
+#include <stdlib.h>
 
 // Global definitions
 #define true 1
@@ -18,17 +20,17 @@
 typedef double real;
 typedef int bool;
 
-int rank, commsize, n, m;
+// Global vars
+int rank, commsize, n, m, numthreads;
 real h;
-
 double t;
-int from, to;
+int *from, *to;
 
 // Project attached functions
 real *mk_1D_array(size_t n, bool zero);
 real **mk_2D_array(size_t n1, size_t n2, bool zero);
 void transpose(real **bt, real **b, size_t m);
-real rhs(real x, real y);
+real rhs(real x, real y, bool ret_1);
 
 // Functions implemented in FORTRAN in fst.f and called from C.
 // The trailing underscore comes from a convention for symbol names, called name
@@ -45,8 +47,8 @@ void init(int argc, char **argv);
 void usage_err();
 void finalize();
 
-int get_row_count();
-int get_from();
-int get_to();
+int get_row_count(int rank);
+int get_from(int rank);
+int get_to(int rank);
 
 #endif //POISSON_GLOBAL_H

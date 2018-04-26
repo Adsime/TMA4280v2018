@@ -10,8 +10,8 @@
  * Other functions can be defined to swtich between problem definitions.
  */
 
-real rhs(real x, real y) {
-    return 2 * (y - y*y + x - x*x);
+real rhs(real x, real y, bool ret_1) {
+    return ret_1 ? 1 : 2 * (y - y*y + x - x*x);
 }
 
 /*
@@ -112,27 +112,29 @@ void init(int argc, char **argv) {
     n = atoi(argv[1]);
     m = n - 1;
     h = 1.0 / n;
+    numthreads = atoi(argv[2]);
 }
 
 void usage_err() {
-    printf("Usage:\n");
-    printf("  poisson n\n\n");
+    printf("Usage: mpirun -np <p> poisson <n> <t>\n");
     printf("Arguments:\n");
-    printf("  n: the problem size (must be a power of 2)\n");
+    printf("<p>: process count (positive integer)\n");
+    printf("<n>: the problem size (must be a power of 2)\n");
+    printf("<t>: thread count (positive integer)\n");
 }
 
 void finalize() {
     MPI_Finalize();
 }
 
-int get_row_count() {
-    return to - from;
+int get_row_count(int rank) {
+    return to[rank] - from[rank];
 }
 
-int get_to() {
-    return to;
+int get_to(int rank) {
+    return to[rank];
 }
 
-int get_from() {
-    return from;
+int get_from(int rank) {
+    return from[rank];
 }

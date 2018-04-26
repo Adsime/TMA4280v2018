@@ -12,47 +12,34 @@
 
 
 void start() {
-    init_list(n, commsize, rank, h);
-
-    //printf("rank: %d - from: %d\n", rank, get_from());
-    //printf("rank: %d - to: %d\n", rank, get_to());
+    init_list();
 
     init_transpose();
-
-    printf("asd: %d\n", get_row_count());
 
     /*
      * Grid points are generated with constant mesh size on both x- and y-axis.
      */
-    time_start();
-    real *grid = mk_1D_array(n+1, false);
+    real *grid = mk_1D_array((size_t) n+1, false);
+#pragma omp parallel for num_threads(numthreads) schedule(static)
     for (size_t i = 0; i < n+1; i++) {
         grid[i] = i * h;
     }
-    time_stop("Grid");
-
     /*
      * The diagonal of the eigenvalue matrix of T is set with the eigenvalues
      * defined Chapter 9. page 93 of the Lecture Notes.
      * Note that the indexing starts from zero here, thus i+1.
      */
-    time_start();
-    real *diag = mk_1D_array(m, false);
+    real *diag = mk_1D_array((size_t) m, false);
+#pragma omp parallel for num_threads(numthreads) schedule(static)
     for (size_t i = 0; i < m; i++) {
         diag[i] = 2.0 * (1.0 - cos((i+1) * PI / n));
     }
-    time_stop("Diag");
-
-
-
     /*
      * Allocate the matrices b and bt which will be used for storing value of
      * G, \tilde G^T, \tilde U^T, U as described in Chapter 9. page 101.
      */
-    time_start();
-    real **b = mk_2D_array(m, m, false);
-    real **bt = mk_2D_array(m, m, false);
-    time_stop("Init matrices");
+    real **b = mk_2D_array((size_t) m, (size_t) m, false);
+    real **bt = mk_2D_array((size_t) m, (size_t) m, false);
     /*
      * This vector will holds coefficients of the Discrete Sine Transform (DST)
      * but also of the Fast Fourier Transform used in the FORTRAN code.
@@ -66,26 +53,18 @@ void start() {
      * The array is allocated once and passed as arguments to avoid doings
      * reallocations at each function call.
      */
-    time_start();
     int nn = 4 * n;
-    real *z = mk_1D_array(nn, false);
-    time_stop("Init z array (4 * n thingy)");
+    real *z[numthreads];
+    for(int i = 0; i < numthreads; i++) {
+        z[i] = mk_1D_array((size_t)nn, false);
+    }
+
     /*
-     * Initialize the right hand side data for a given rhs function.
+     * Step 1: Initialize the right hand side data for a given rhs function.
      * Note that the right hand-side is set at nodes corresponding to degrees
      * of freedom, so it excludes the boundary (bug fixed by petterjf 2017).
      *
-     */
-    time_start();
-    for (size_t i = 0; i < m; i++) {
-        for (size_t j = 0; j < m; j++) {
-            b[i][j] = h * h * rhs(grid[i+1], grid[j+1]);
-        }
-    }
-    time_stop("Populate b");
-
-    /*
-     * Compute \tilde G^T = S^-1 * (S * G)^T (Chapter 9. page 101 step 1)
+     * Step 2: Compute \tilde G^T = S^-1 * (S * G)^T (Chapter 9. page 101 step 1)
      * Instead of using two matrix-matrix products the Discrete Sine Transform
      * (DST) is used.
      * The DST code is implemented in FORTRAN in fsf.f and can be called from C.
@@ -94,67 +73,54 @@ void start() {
      * In functions fst_ and fst_inv_ coefficients are written back to the input
      * array (first argument) so that the initial values are overwritten.
      */
-    time_start();
-    for (size_t i = 0; i < m; i++) {
-        fst_(b[i], &n, z, &nn);
-    }
-    time_stop("first fst");
-    time_start();
 
-    //print_asd(b, m);
+    compute(bt, b, grid, z, nn);
 
-    transpose(bt, b, m);
-
-    //print_asd(bt, m);
-
-
-    time_stop("first transpose");
-    time_start();
-    for (size_t i = 0; i < m; i++) {
-        fstinv_(bt[i], &n, z, &nn);
-    }
-    time_stop("first fstinv");
-    /*
-     * Solve Lambda * \tilde U = \tilde G (Chapter 9. page 101 step 2)
-     */
-    time_start();
-    for (size_t i = 0; i < m; i++) {
-        for (size_t j = 0; j < m; j++) {
-            bt[i][j] = bt[i][j] / (diag[i] + diag[j]);
-        }
-    }
-    time_stop("populate bt");
 
     /*
-     * Compute U = S^-1 * (S * Utilde^T) (Chapter 9. page 101 step 3)
+     * Step 1: Solve Lambda * \tilde U = \tilde G (Chapter 9. page 101 step 2)
+     *
+     * Step 2: Compute U = S^-1 * (S * Utilde^T) (Chapter 9. page 101 step 3)
+     *
+     *
      */
-    time_start();
-    for (size_t i = 0; i < m; i++) {
-        fst_(bt[i], &n, z, &nn);
-    }
-    time_stop("second fst");
-    time_start();
-    transpose(b, bt, m);
-    time_stop("second transpose");
-    time_start();
-    for (size_t i = 0; i < m; i++) {
-        fstinv_(b[i], &n, z, &nn);
-    }
-    time_stop("second fstinv");
+    compute(b, bt, grid, z, nn);
+
     /*
      * Compute maximal value of solution for convergence analysis in L_\infty
      * norm.
      */
-    time_start();
     double u_max = 0.0;
     for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
             u_max = u_max > b[i][j] ? u_max : b[i][j];
         }
     }
-    time_stop("U_max thing");
 
-    //printf("u_max = %e\n", u_max);
+    printf("u_max = %e\n", u_max);
+}
+
+// Helper function to extract similar code
+void compute(real **bt, real **b, real *grid, real *z[], int nn) {
+    // Step 1
+#pragma omp parallel for num_threads(numthreads) schedule(static)
+    for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
+        for (size_t j = 0; j < m; j++) {
+            b[i][j] = h * h * rhs(grid[i+1], grid[j+1], false);
+        }
+    }
+
+    // Step 2
+#pragma omp parallel for num_threads(numthreads) schedule(static)
+    for (size_t i = 0; i < m; i++) {
+        fst_(b[i], &n, z[omp_get_thread_num()], &nn);
+    }
+    parallel_transpose(bt, b);
+
+#pragma omp parallel for num_threads(numthreads) schedule(static)
+    for (size_t i = 0; i < m; i++) {
+        fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
+    }
 }
 
 void test() {

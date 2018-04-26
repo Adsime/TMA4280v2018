@@ -4,14 +4,13 @@
 #include "global.h"
 #include "list_handler.h"
 
-
-void init_list(int n, int nprocs, int rank, real h) {
-
-    int row_c = n / nprocs;
-    int rem = (n % nprocs);
-    from = (rank * row_c) + (rank < rem ? rank : rem);
-    to = from + row_c + (rank < rem ? 1 : 0);
+void init_list() {
+    from = (int*) malloc(commsize * sizeof(int));
+    to = (int*) malloc(commsize * sizeof(int));
+    int row_c = m / commsize;
+    int rem = (m % commsize);
+    for(int i = 0; i < commsize; i++) {
+        from[i] = (i * row_c) + (i < rem ? i : rem);
+        to[i] = from[i] + row_c + (i < rem ? 1 : 0);
+    }
 }
-
-
-
