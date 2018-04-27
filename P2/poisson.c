@@ -12,8 +12,8 @@
 
 
 void start() {
+    
     init_from_to();
-
     init_transpose();
 
     /*

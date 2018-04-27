@@ -5,6 +5,10 @@
 #ifndef TMA4280V2018_TIMING_H
 #define TMA4280V2018_TIMING_H
 
+#include <mpi.h>
+
+double t;
+
 void time_start();
 void time_stop(char method[]);
 

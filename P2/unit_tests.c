@@ -35,7 +35,7 @@ void parallel_transpose_unittest() {
     init_transpose();
 
 
-    double test_matrix[3][3][3] = {{{1.0,1.0,1.0},
+    /*real **test_matrix[] = {{{1.0,1.0,1.0},
                                      {2.0,2.0,2.0},
                                      {3.0,3.0,3.0}},
 
@@ -47,7 +47,7 @@ void parallel_transpose_unittest() {
                                      {6.0,5.0,4.0},
                                      {3.0,2.0,1.0}}};
 
-    double test_matrix_expected[3][3][3] =
+    real **test_matrix_expected[] =
                                    {{{1.0,2.0,3.0},
                                      {1.0,2.0,3.0},
                                      {1.0,2.0,3.0}},
@@ -60,7 +60,7 @@ void parallel_transpose_unittest() {
                                      {8.0,5.0,2.0},
                                      {7.0,4.0,1.0}}};
 
-    double test_matrix_target[3][3][3] =
+    real **test_matrix_target[] =
                                     {{{0.0,0.0,0.0},
                                       {0.0,0.0,0.0},
                                       {0.0,0.0,0.0}},
@@ -71,11 +71,15 @@ void parallel_transpose_unittest() {
 
                                      {{0.0,0.0,0.0},
                                       {0.0,0.0,0.0},
-                                      {0.0,0.0,0.0}}};
+                                      {0.0,0.0,0.0}}};*/
 
-    printf("%lf\n", test_matrix[2][1][1]);
+    real **test_matrix_target = {{0,0,0},
+                                 {0,0,0},
+                                 {0,0,0}};
 
-
+    real **test_matrix = {{1,1,1},
+                          {2,2,2},
+                          {3,3,3}};
 
     /*real **b = mk_2D_array((size_t) m, (size_t) m, false);
     for(int i = 0; i < 3; i++) {
@@ -93,7 +97,7 @@ void parallel_transpose_unittest() {
     }
     parallel_transpose(b, bt);*/
 
-    parallel_transpose(test_matrix_target[0], test_matrix[0]);
+    parallel_transpose((real**)test_matrix_target[0], (real**)test_matrix[0]);
 
     for(int i = 0; i < 3; i++) {
         //parallel_transpose(test_matrix_target[i], test_matrix[i]);

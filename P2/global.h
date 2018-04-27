@@ -24,7 +24,6 @@ typedef int bool;
 // Global vars
 int rank, commsize, n, m, numthreads;
 real h;
-double t;
 int *from, *to;
 
 // Project attached functions
