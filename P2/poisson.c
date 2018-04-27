@@ -118,7 +118,7 @@ void compute(real **bt, real **b, real *grid, real *z[], int nn) {
     parallel_transpose(bt, b);
 
 #pragma omp parallel for num_threads(numthreads) schedule(static)
-    for (size_t i = get_from(rank); i < get_to(rank); i++) {
+    for (size_t i = 0; i < m; i++) {
         fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
     }
 }

@@ -34,6 +34,7 @@ void parallel_transpose_unittest() {
     init_from_to();
     init_transpose();
 
+
     double test_matrix[3][3][3] = {{{1.0,1.0,1.0},
                                      {2.0,2.0,2.0},
                                      {3.0,3.0,3.0}},
@@ -72,30 +73,41 @@ void parallel_transpose_unittest() {
                                       {0.0,0.0,0.0},
                                       {0.0,0.0,0.0}}};
 
+    printf("%lf\n", test_matrix[2][1][1]);
 
 
-    real **b = mk_2D_array((size_t) m, (size_t) m, false);
+
+    /*real **b = mk_2D_array((size_t) m, (size_t) m, false);
     for(int i = 0; i < 3; i++) {
         for(int j = 0; j < 3; j++) {
-            b[i][j] = 1.0/2.0;
+            b[i][j] = 1.0/rand();
         }
     }
     real **bt = mk_2D_array((size_t) m, (size_t) m, false);
+    real **bt_expected = mk_2D_array((size_t) m, (size_t) m, false);
+
+    for(int i = 0; i < m; i++) {
+        for(int j = 0; j < m; j++) {
+            bt_expected[j][i] = b[i][j];
+        }
+    }
+    parallel_transpose(b, bt);*/
+
+    parallel_transpose(test_matrix_target[0], test_matrix[0]);
+
     for(int i = 0; i < 3; i++) {
         //parallel_transpose(test_matrix_target[i], test_matrix[i]);
     }
 
-    parallel_transpose_unittest(b, bt);
-
     bool passed = true;
-    for(int i = 0; i < 3; i++) {
-        for(int x = 0; x < 3; x++) {
-            for(int y = 0; y < 3; y++) {
-                /*if(test_matrix_target[i][x][y] != test_matrix_expected[i][x][y]) {
-                    passed = false;
-                    break;
-                }*/
-            }
+    for(int i = 0; i < m; i++) {
+        for(int j = 0; j < m; j++) {
+            /*if(bt[i][j] != bt_expected[i][j]) {
+                //printf("expected: %lf - actual: %lf", bt_expected[i][j], bt[i][j]);
+                passed = false;
+                break;
+            }*/
+
         }
     }
     printf("parallel_transpose_unittest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
