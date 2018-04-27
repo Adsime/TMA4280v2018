@@ -14,8 +14,8 @@ int main(int argc, char **argv) {
             start();
             break;
         case 't':
-            init_mockdata();
             init_from_to_unittest();
+            parallel_transpose_unittest();
             break;
     }
     finalize();

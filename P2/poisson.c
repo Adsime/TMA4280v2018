@@ -122,6 +122,3 @@ void compute(real **bt, real **b, real *grid, real *z[], int nn) {
         fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
     }
 }
-
-
-
