@@ -79,6 +79,12 @@ void init(int argc, char **argv) {
      *  - the number of degrees of freedom in each direction is m = n-1,
      *  - the mesh size is constant h = 1/n.
      */
+    if((char) *argv[3] == 't' && commsize > 1) {
+        printf("Test usage: mpirun -np 1 poisson <n> 1 t\n");
+        printf("Arguments:\n");
+        printf("<n>: the problem size (must be a power of 2)\n");
+        exit(1);
+    }
     n = atoi(argv[1]);
     m = n - 1;
     h = 1.0 / n;
