@@ -10,6 +10,7 @@
 #include <mpi.h>
 #include <omp.h>
 #include <stdlib.h>
+#include "timing.h"
 
 // Global definitions
 #define true 1
@@ -29,7 +30,6 @@ int *from, *to;
 // Project attached functions
 real *mk_1D_array(size_t n, bool zero);
 real **mk_2D_array(size_t n1, size_t n2, bool zero);
-void transpose(real **bt, real **b, size_t m);
 real rhs(real x, real y, bool ret_1);
 
 // Functions implemented in FORTRAN in fst.f and called from C.
@@ -38,17 +38,16 @@ real rhs(real x, real y, bool ret_1);
 void fst_(real *v, int *n, real *w, int *nn);
 void fstinv_(real *v, int *n, real *w, int *nn);
 
-void time_start();
-void time_stop(char method[]);
-
-void print_asd(real **arr, int rows, int columns);
-
 void init(int argc, char **argv);
-void usage_err();
+void check_input(int argc);
+
 void finalize();
+
+void init_from_to();
 
 int get_row_count(int rank);
 int get_from(int rank);
 int get_to(int rank);
+
 
 #endif //POISSON_GLOBAL_H

@@ -2,7 +2,6 @@
 // Created by adrian on 24.04.18.
 //
 
-#include <stdlib.h>
 #include "global.h"
 
 /*
@@ -11,7 +10,7 @@
  */
 
 real rhs(real x, real y, bool ret_1) {
-    return ret_1 ? 1 : 2 * (y - y*y + x - x*x);
+    return ret_1 ? 1 : 2 * (y - y * y + x - x * x);
 }
 
 /*
@@ -20,8 +19,7 @@ real rhs(real x, real y, bool ret_1) {
  * stored in the array to the block structure, using displacement arrays.
  */
 
-void transpose(real **bt, real **b, size_t m)
-{
+void transpose(real **bt, real **b, size_t m) {
     for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
             bt[i][j] = b[j][i];
@@ -34,12 +32,11 @@ void transpose(real **bt, real **b, size_t m)
  * The only thing to notice here is the use of calloc to zero the array.
  */
 
-real *mk_1D_array(size_t n, bool zero)
-{
+real *mk_1D_array(size_t n, bool zero) {
     if (zero) {
-        return (real *)calloc(n, sizeof(real));
+        return (real *) calloc(n, sizeof(real));
     }
-    return (real *)malloc(n * sizeof(real));
+    return (real *) malloc(n * sizeof(real));
 }
 
 /*
@@ -51,56 +48,29 @@ real *mk_1D_array(size_t n, bool zero)
  * 3. pointers are set for each row to the address of first element.
  */
 
-real **mk_2D_array(size_t n1, size_t n2, bool zero)
-{
+real **mk_2D_array(size_t n1, size_t n2, bool zero) {
     // 1
-    real **ret = (real **)malloc(n1 * sizeof(real *));
+    real **ret = (real **) malloc(n1 * sizeof(real *));
 
     // 2
     if (zero) {
-        ret[0] = (real *)calloc(n1 * n2, sizeof(real));
-    }
-    else {
-        ret[0] = (real *)malloc(n1 * n2 * sizeof(real));
+        ret[0] = (real *) calloc(n1 * n2, sizeof(real));
+    } else {
+        ret[0] = (real *) malloc(n1 * n2 * sizeof(real));
     }
 
     // 3
     for (size_t i = 1; i < n1; i++) {
-        ret[i] = ret[i-1] + n2;
+        ret[i] = ret[i - 1] + n2;
     }
     return ret;
 }
 
-void time_start() {
-    t = MPI_Wtime();
-}
-
-void time_stop(char method[]) {
-    double res = (MPI_Wtime() - t) * 1000;
-    //printf("Time elapsed method: %s - Time %f ms\n", method, res);
-}
-
-void print_asd(real **arr, int rows, int columns) {
-    for(int i = 0; i < rows; i++) {
-        for(int j = 0; j < columns; j++) {
-            printf("%f ", arr[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n\n");
-}
-
 void init(int argc, char **argv) {
     // Initialize MPI
-    MPI_Init (&argc, &argv);
-    MPI_Comm_size (MPI_COMM_WORLD, &commsize);
-    MPI_Comm_rank (MPI_COMM_WORLD, &rank);
-
-    // Check for the correct params
-    //TODO add threads
-    if (argc < 3) {
-        usage_err();
-    }
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &commsize);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     /*
      *  The equation is solved on a 2D structured grid and homogeneous Dirichlet
@@ -115,12 +85,28 @@ void init(int argc, char **argv) {
     numthreads = atoi(argv[2]);
 }
 
-void usage_err() {
-    printf("Usage: mpirun -np <p> poisson <n> <t>\n");
-    printf("Arguments:\n");
-    printf("<p>: process count (positive integer)\n");
-    printf("<n>: the problem size (must be a power of 2)\n");
-    printf("<t>: thread count (positive integer)\n");
+void check_input(int argc) {
+    // Check for the correct params
+    if (argc < 4) {
+        printf("Usage: mpirun -np <p> poisson <n> <t> <m>\n");
+        printf("Arguments:\n");
+        printf("<p>: process count (positive integer)\n");
+        printf("<n>: the problem size (must be a power of 2)\n");
+        printf("<t>: thread count (positive integer)\n");
+        printf("<m>: method ('t' for tests, 's' for standard)\n");
+        exit(1);
+    }
+}
+
+void init_from_to() {
+    from = (int *) malloc(commsize * sizeof(int));
+    to = (int *) malloc(commsize * sizeof(int));
+    int row_c = m / commsize;
+    int rem = (m % commsize);
+    for (int i = 0; i < commsize; i++) {
+        from[i] = (i * row_c) + (i < rem ? i : rem);
+        to[i] = from[i] + row_c + (i < rem ? 1 : 0);
+    }
 }
 
 void finalize() {

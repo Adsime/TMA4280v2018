@@ -12,7 +12,7 @@
 
 
 void start() {
-    init_list();
+    init_from_to();
 
     init_transpose();
 
@@ -106,25 +106,21 @@ void compute(real **bt, real **b, real *grid, real *z[], int nn) {
 #pragma omp parallel for num_threads(numthreads) schedule(static)
     for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
         for (size_t j = 0; j < m; j++) {
-            b[i][j] = h * h * rhs(grid[i+1], grid[j+1], false);
+            b[i][j] = h * h * rhs(grid[i + 1], grid[j + 1], false);
         }
     }
 
     // Step 2
 #pragma omp parallel for num_threads(numthreads) schedule(static)
-    for (size_t i = 0; i < m; i++) {
+    for (size_t i = get_from(rank); i < get_to(rank); i++) {
         fst_(b[i], &n, z[omp_get_thread_num()], &nn);
     }
     parallel_transpose(bt, b);
 
 #pragma omp parallel for num_threads(numthreads) schedule(static)
-    for (size_t i = 0; i < m; i++) {
+    for (size_t i = get_from(rank); i < get_to(rank); i++) {
         fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
     }
-}
-
-void test() {
-    real **arr = mk_2D_array(4, 4, true);
 }
 
 
