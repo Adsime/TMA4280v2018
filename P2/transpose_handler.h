@@ -9,10 +9,15 @@
 
 int *sendcounts;
 int *recvcounts;
-int *senddispl;
-int *recvdispl;
+int *senddispls;
+int *recvdispls;
+
+int *displs;
+int *counts;
 
 void init_transpose();
 void parallel_transpose(real **bt, real **b);
+
+void print_arr(char name[], int* arr);
 
 #endif //POISSON_TRANSPOSE_HANDLER_H

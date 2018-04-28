@@ -130,3 +130,12 @@ int get_to(int rank) {
 int get_from(int rank) {
     return from[rank];
 }
+
+int get_responsible_process(int j) {
+    for(int i = 0; i < commsize; i++) {
+        if(to[i] < j) {
+            return i;
+        }
+    }
+    return 0;
+}

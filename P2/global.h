@@ -47,6 +47,7 @@ void init_from_to();
 int get_row_count(int rank);
 int get_from(int rank);
 int get_to(int rank);
+int get_responsible_process(int j);
 
 
 #endif //POISSON_GLOBAL_H

@@ -45,7 +45,14 @@ void parallel_transpose_unittest() {
 
         }
     }
+    real **expected = mk_2D_array(m, m, false);
+    for(int i = 0; i < m; i++) {
+        for(int j = 0; j < m; j++) {
+            // test actual to manual transpose
+            expected[i][j] = b[j][i];
+        }
+    }
     printf("parallel_transpose_unittest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
-
-
+    print_arr("expected", expected);
+    print_arr("actual", bt);
 }

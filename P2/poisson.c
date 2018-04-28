@@ -76,10 +76,8 @@ void start(real **result) {
      * In functions fst_ and fst_inv_ coefficients are written back to the input
      * array (first argument) so that the initial values are overwritten.
      */
-
-    printf("BEFORE");
+    time_start();
     compute(bt, b, grid, z, nn);
-    printf("AFTER");
 
     /*
      * Step 1: Solve Lambda * \tilde U = \tilde G (Chapter 9. page 101 step 2)
@@ -88,13 +86,13 @@ void start(real **result) {
      *
      *
      */
-    //compute(b, bt, grid, z, nn);
-
+    compute(b, bt, grid, z, nn);
+    time_stop("computing");
     /*
      * Compute maximal value of solution for convergence analysis in L_\infty
      * norm.
      */
-    /*double u_max = 0.0;
+    double u_max = 0.0;
     for (size_t i = 0; i < get_row_count(rank); i++) {
     //for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
@@ -102,9 +100,7 @@ void start(real **result) {
         }
     }
 
-    printf("u_max = %e\n", u_max);*/
-
-    printf("Rank: %d done <3", rank);
+    printf("u_max = %e\n", u_max);
 
     if(result) result = b;
 }

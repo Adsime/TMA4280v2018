@@ -14,7 +14,6 @@ int main(int argc, char **argv) {
     char marg = (char) *argv[3];
     switch(marg) {
         case 's':
-            printf("asdasdasd");
             start(res);
             break;
         case 't':
