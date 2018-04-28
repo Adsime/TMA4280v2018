@@ -71,7 +71,7 @@ real** start(char task) {
 	 */
 #pragma omp parallel for num_threads(numthreads) schedule(static)
     //for (size_t i = 0; i < get_row_count(rank); i++) {
-    for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
+    for (size_t i = (size_t)get_from(rank); i < get_to(rank); i++) {
         for (size_t j = 0; j < m; j++) {
             b[i][j] = h * h * rhs(grid[i + 1], grid[j + 1], task);
         }
@@ -81,26 +81,44 @@ real** start(char task) {
 
     // Solve Lambda * \tilde U = \tilde G (Chapter 9. page 101 step 2)
 #pragma omp parallel for num_threads(numthreads) schedule(static) collapse(2)
-    for (size_t i = get_from(rank); i < get_to(rank); i++)
+    for (size_t i = (size_t)get_from(rank); i < get_to(rank); i++)
         for (size_t j = 0; j < m; j++)
             bt[i][j] = bt[i][j] / (diag[i] + diag[j]);
 
 
     compute(b, bt, grid, z, nn);
-    time_stop("computing");
     /*
      * Compute maximal value of solution for convergence analysis in L_\infty
      * norm.
      */
     double u_max = 0.0;
     //for (size_t i = 0; i < get_row_count(rank); i++) {
-    for (size_t i = 0; i < m; i++) {
+
+#pragma omp parallel for num_threads(numthreads) schedule(static) collapse(2)
+    for (size_t i = get_from(rank); i < get_to(rank); i++) {
         for (size_t j = 0; j < m; j++) {
             u_max = u_max > b[i][j] ? u_max : b[i][j];
         }
     }
 
-    printf("u_max = %e\n", u_max);
+    if(!rank) {
+        int worst_rank = rank;
+        int s_rank;
+        real max;
+        for(int i = 1; i < commsize; i++) {
+            s_rank = i;
+            MPI_Recv(&max, 1, MPI_DOUBLE, s_rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            if(max > u_max) {
+                u_max = max;
+                worst_rank = s_rank;
+            }
+        }
+        time_stop("computing");
+        printf("Worst rank: %d - Value: %lf\n", worst_rank, u_max);
+    } else {
+        MPI_Send(&u_max, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    }
+    //printf("u_max = %e\n", u_max);
     return b;
     //free(b);
     //realloc(bt, m * m * sizeof(real));
@@ -111,14 +129,15 @@ void compute(real **bt, real **b, real *grid, real *z[], int nn) {
     // Step 2
 #pragma omp parallel for num_threads(numthreads) schedule(static)
     //for (size_t i = 0; i < get_row_count(rank); i++) {
-    for (size_t i = get_from(rank); i < get_to(rank); i++) {
+    for (size_t i = (size_t)get_from(rank); i < get_to(rank); i++) {
         fst_(b[i], &n, z[omp_get_thread_num()], &nn);
     }
     parallel_transpose(bt, b);
 
 #pragma omp parallel for num_threads(numthreads) schedule(static)
     //for (size_t i = 0; i < get_row_count(rank); i++) {
-    for (size_t i = 0; i < m; i++) {
+    for (size_t i = (size_t)get_from(rank); i < get_to(rank); i++) {
+    //for (size_t i = 0; i < m; i++) {
         fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
     }
 }
