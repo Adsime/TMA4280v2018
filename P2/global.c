@@ -9,8 +9,8 @@
  * Other functions can be defined to swtich between problem definitions.
  */
 
-real rhs(real x, real y, bool ret_1) {
-    return ret_1 ? 1 : 2 * (y - y * y + x - x * x);
+real rhs(real x, real y, char task) {
+    return task == 't' ? 5*PI*PI*sin(PI*x)*sin(2*PI*y) : 2 * (y - y * y + x - x * x);
 }
 
 /*

@@ -32,13 +32,9 @@ void parallel_transpose(real **bt, real **b) {
     MPI_Alltoallv(b[0], sendcounts, senddispls, MPI_DOUBLE, bt[0], recvcounts, recvdispls, matrixcolumntype, MPI_COMM_WORLD);
 }
 
-void print_arr(int rank, real** arr, bool up) {
-    printf("rank %d\n", rank);
-    for(int i = 0; i < (up ? m : 2); i++) {
-        for(int j = 0; j < (up ? 2 : m); j++) {
-            printf("%lf ", arr[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+void transpose_destroy() {
+    realloc(sendcounts, commsize * sizeof (int));
+    realloc(recvcounts, commsize * sizeof (int));
+    realloc(senddispls, commsize * sizeof (int));
+    realloc(recvdispls, commsize * sizeof (int));
 }

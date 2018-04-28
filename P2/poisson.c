@@ -11,7 +11,7 @@
 #include "poisson.h"
 
 
-void start(real **result) {
+real** start(char task) {
 
     init_from_to();
     init_transpose();
@@ -62,30 +62,30 @@ void start(real **result) {
         z[i] = mk_1D_array((size_t)nn, false);
     }
 
-    /*
-     * Step 1: Initialize the right hand side data for a given rhs function.
-     * Note that the right hand-side is set at nodes corresponding to degrees
-     * of freedom, so it excludes the boundary (bug fixed by petterjf 2017).
-     *
-     * Step 2: Compute \tilde G^T = S^-1 * (S * G)^T (Chapter 9. page 101 step 1)
-     * Instead of using two matrix-matrix products the Discrete Sine Transform
-     * (DST) is used.
-     * The DST code is implemented in FORTRAN in fsf.f and can be called from C.
-     * The array zz is used as storage for DST coefficients and internally for
-     * FFT coefficients in fst_ and fstinv_.
-     * In functions fst_ and fst_inv_ coefficients are written back to the input
-     * array (first argument) so that the initial values are overwritten.
-     */
     time_start();
-    compute(bt, b, grid, z, nn);
 
     /*
-     * Step 1: Solve Lambda * \tilde U = \tilde G (Chapter 9. page 101 step 2)
-     *
-     * Step 2: Compute U = S^-1 * (S * Utilde^T) (Chapter 9. page 101 step 3)
-     *
-     *
-     */
+	 * Initialize the right hand side data for a given rhs function.
+	 * Note that the right hand-side is set at nodes corresponding to degrees
+	 * of freedom, so it excludes the boundary (bug fixed by petterjf 2017).
+	 */
+#pragma omp parallel for num_threads(numthreads) schedule(static)
+    //for (size_t i = 0; i < get_row_count(rank); i++) {
+    for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
+        for (size_t j = 0; j < m; j++) {
+            b[i][j] = h * h * rhs(grid[i + 1], grid[j + 1], task);
+        }
+    }
+
+    compute(bt, b, grid, z, nn);
+
+    // Solve Lambda * \tilde U = \tilde G (Chapter 9. page 101 step 2)
+#pragma omp parallel for num_threads(numthreads) schedule(static) collapse(2)
+    for (size_t i = get_from(rank); i < get_to(rank); i++)
+        for (size_t j = 0; j < m; j++)
+            bt[i][j] = bt[i][j] / (diag[i] + diag[j]);
+
+
     compute(b, bt, grid, z, nn);
     time_stop("computing");
     /*
@@ -101,21 +101,13 @@ void start(real **result) {
     }
 
     printf("u_max = %e\n", u_max);
-
-    if(result) result = b;
+    return b;
+    //free(b);
+    //realloc(bt, m * m * sizeof(real));
 }
 
 // Helper function to extract similar code
 void compute(real **bt, real **b, real *grid, real *z[], int nn) {
-    // Step 1
-#pragma omp parallel for num_threads(numthreads) schedule(static)
-    //for (size_t i = 0; i < get_row_count(rank); i++) {
-    for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
-        for (size_t j = 0; j < m; j++) {
-            b[i][j] = h * h * rhs(grid[i + 1], grid[j + 1], false);
-        }
-    }
-
     // Step 2
 #pragma omp parallel for num_threads(numthreads) schedule(static)
     //for (size_t i = 0; i < get_row_count(rank); i++) {

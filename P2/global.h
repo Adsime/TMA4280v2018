@@ -29,7 +29,7 @@ int *from, *to;
 // Project attached functions
 real *mk_1D_array(size_t n, bool zero);
 real **mk_2D_array(size_t n1, size_t n2, bool zero);
-real rhs(real x, real y, bool ret_1);
+real rhs(real x, real y, char task);
 
 // Functions implemented in FORTRAN in fst.f and called from C.
 // The trailing underscore comes from a convention for symbol names, called name

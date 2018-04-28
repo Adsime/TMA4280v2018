@@ -10,7 +10,7 @@
 
 
 // Functions
-void start(real **result);
+real** start(char task);
 void compute(real **bt, real **b, real *grid, real *z[], int nn);
 
 #endif //POISSON_POISSON_H
