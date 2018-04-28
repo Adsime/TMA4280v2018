@@ -40,8 +40,8 @@ void start(real **result) {
      */
     //real **b = mk_2D_array((size_t) m, (size_t) m, false);
     //real **bt = mk_2D_array((size_t) m, (size_t) m, false);
-    real **b = mk_2D_array((size_t) get_row_count(rank), m, false);
-    real **bt = mk_2D_array((size_t) get_row_count(rank), m, false);
+    real **b = mk_2D_array(m, m, false);
+    real **bt = mk_2D_array(m, m, false);
 
     /*
      * This vector will holds coefficients of the Discrete Sine Transform (DST)
@@ -93,8 +93,8 @@ void start(real **result) {
      * norm.
      */
     double u_max = 0.0;
-    for (size_t i = 0; i < get_row_count(rank); i++) {
-    //for (size_t i = 0; i < m; i++) {
+    //for (size_t i = 0; i < get_row_count(rank); i++) {
+    for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
             u_max = u_max > b[i][j] ? u_max : b[i][j];
         }
@@ -109,8 +109,8 @@ void start(real **result) {
 void compute(real **bt, real **b, real *grid, real *z[], int nn) {
     // Step 1
 #pragma omp parallel for num_threads(numthreads) schedule(static)
-    for (size_t i = 0; i < get_row_count(rank); i++) {
-    //for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
+    //for (size_t i = 0; i < get_row_count(rank); i++) {
+    for (size_t i = (size_t) get_from(rank); i < get_to(rank); i++) {
         for (size_t j = 0; j < m; j++) {
             b[i][j] = h * h * rhs(grid[i + 1], grid[j + 1], false);
         }
@@ -118,15 +118,15 @@ void compute(real **bt, real **b, real *grid, real *z[], int nn) {
 
     // Step 2
 #pragma omp parallel for num_threads(numthreads) schedule(static)
-    for (size_t i = 0; i < get_row_count(rank); i++) {
-    //for (size_t i = get_from(rank); i < get_to(rank); i++) {
+    //for (size_t i = 0; i < get_row_count(rank); i++) {
+    for (size_t i = get_from(rank); i < get_to(rank); i++) {
         fst_(b[i], &n, z[omp_get_thread_num()], &nn);
     }
     parallel_transpose(bt, b);
 
 #pragma omp parallel for num_threads(numthreads) schedule(static)
-    for (size_t i = 0; i < get_row_count(rank); i++) {
-    //for (size_t i = 0; i < m; i++) {
+    //for (size_t i = 0; i < get_row_count(rank); i++) {
+    for (size_t i = 0; i < m; i++) {
         fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
     }
 }

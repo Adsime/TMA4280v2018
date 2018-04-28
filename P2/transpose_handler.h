@@ -12,12 +12,9 @@ int *recvcounts;
 int *senddispls;
 int *recvdispls;
 
-int *displs;
-int *counts;
-
 void init_transpose();
 void parallel_transpose(real **bt, real **b);
 
-void print_arr(char name[], int* arr);
+void print_arr(int rank, real **arr, bool up);
 
 #endif //POISSON_TRANSPOSE_HANDLER_H

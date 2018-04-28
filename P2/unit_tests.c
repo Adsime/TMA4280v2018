@@ -53,6 +53,6 @@ void parallel_transpose_unittest() {
         }
     }
     printf("parallel_transpose_unittest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
-    print_arr("expected", expected);
-    print_arr("actual", bt);
+    //print_arr("expected", expected);
+    //print_arr("actual", bt);
 }
