@@ -20,7 +20,6 @@ void print_stuff(real **a, char name[]) {
 }
 
 int main(int argc, char **argv) {
-    check_input(argc);
     init(argc, argv);
     char marg = (char) *argv[3];
     switch(marg) {

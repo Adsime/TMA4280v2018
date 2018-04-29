@@ -68,6 +68,7 @@ real **mk_2D_array(size_t n1, size_t n2, bool zero) {
 
 void init(int argc, char **argv) {
     // Initialize MPI
+    check_input(argc, argv);
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &commsize);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -79,21 +80,20 @@ void init(int argc, char **argv) {
      *  - the number of degrees of freedom in each direction is m = n-1,
      *  - the mesh size is constant h = 1/n.
      */
-    if((char) *argv[3] == 't' && commsize > 1) {
-        printf("Test usage: mpirun -np 1 poisson <n> 1 t\n");
-        printf("Arguments:\n");
-        printf("<n>: the problem size (must be a power of 2)\n");
-        exit(1);
-    }
     n = atoi(argv[1]);
     m = n - 1;
     h = 1.0 / n;
     numthreads = atoi(argv[2]);
 }
 
-void check_input(int argc) {
+void check_input(int argc, char **argv) {
     // Check for the correct params
-    if (argc < 4) {
+    bool pow_2 = false;
+    if(argc > 2) {
+        int arg = atoi(argv[1]);
+        pow_2 = arg && !(arg & (arg - 1));
+    }
+    if (argc < 4 || !pow_2) {
         printf("Usage: mpirun -np <p> poisson <n> <t> <m>\n");
         printf("Arguments:\n");
         printf("<p>: process count (positive integer)\n");

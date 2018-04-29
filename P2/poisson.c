@@ -94,7 +94,6 @@ real** start(char task) {
     double u_max = 0.0;
     //for (size_t i = 0; i < get_row_count(rank); i++) {
 
-#pragma omp parallel for num_threads(numthreads) schedule(static) collapse(2)
     for (size_t i = get_from(rank); i < get_to(rank); i++) {
         for (size_t j = 0; j < m; j++) {
             u_max = u_max > b[i][j] ? u_max : b[i][j];
@@ -102,6 +101,7 @@ real** start(char task) {
     }
 
     double global_max;
+    printf("Local max: %lf\n", u_max);
     MPI_Allreduce(&u_max, &global_max, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
     if(!rank && task != 't') {
         printf("Global maximum %lf\n", global_max);

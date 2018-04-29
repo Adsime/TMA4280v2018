@@ -38,7 +38,7 @@ void fst_(real *v, int *n, real *w, int *nn);
 void fstinv_(real *v, int *n, real *w, int *nn);
 
 void init(int argc, char **argv);
-void check_input(int argc);
+void check_input(int argc, char **argv);
 
 void finalize();
 
