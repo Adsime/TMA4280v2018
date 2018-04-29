@@ -101,7 +101,6 @@ real** start(char task) {
     }
 
     double global_max;
-    printf("Local max: %lf\n", u_max);
     MPI_Allreduce(&u_max, &global_max, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
     if(!rank && task != 't') {
         printf("Global maximum %lf\n", global_max);
