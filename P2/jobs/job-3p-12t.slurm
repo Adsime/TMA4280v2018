@@ -11,8 +11,8 @@
 
 module load GCC OpenMPI
 
-export N=$[2**13]
+export N=$[2**14]
 
 echo 3 process 12 threads:
-mpiexec -np 3 poisson ${N} 12 s
+mpiexec -np 3 ../poisson ${N} 12 s
 echo
