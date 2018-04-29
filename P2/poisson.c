@@ -104,9 +104,6 @@ real** start(char task) {
     double global_max;
     MPI_Allreduce(&u_max, &global_max, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
     printf("rank: %d - local max: %lf\n", rank, u_max);
-    if(!rank) {
-        printf("Global maximum %lf\n", global_max);
-    }
     return b;
     //free(b);
     //realloc(bt, m * m * sizeof(real));
