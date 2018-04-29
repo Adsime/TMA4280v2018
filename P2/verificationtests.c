@@ -6,11 +6,19 @@
 
 void start_verificationtest() {
     bool passed = true;
-    real test_1 = test_n(2);
-    real test_2 = test_n(6);
-    printf("n=1: %lf\nn=10: %lf\n", test_1, test_2);
-
-    //printf("start_verificationtest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
+    real current_val = 0.0;
+    real res = 0.0;
+    for(int i = 2; i <= 10; i++) {
+        res = test_n(i);
+        if(current_val > res) {
+            passed = false;
+            break;
+        }
+        current_val = res;
+    }
+    if(!rank) {
+        printf("start_verificationtest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
+    }
 }
 
 real test_n(int n) {

@@ -107,24 +107,6 @@ real** start(char task) {
     if(!rank) {
         printf("Global maximum %lf\n", global_max);
     }
-    /*if(!rank) {
-        int worst_rank = rank;
-        int s_rank;
-        real max;
-        for(int i = 1; i < commsize; i++) {
-            s_rank = i;
-            MPI_Recv(&max, 1, MPI_DOUBLE, s_rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            if(max > u_max) {
-                u_max = max;
-                worst_rank = s_rank;
-            }
-        }
-        time_stop("computing");
-        printf("Worst rank: %d - Value: %lf\n", worst_rank, u_max);
-    } else {
-        MPI_Send(&u_max, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
-    }*/
-    //printf("u_max = %e\n", u_max);
     return b;
     //free(b);
     //realloc(bt, m * m * sizeof(real));
