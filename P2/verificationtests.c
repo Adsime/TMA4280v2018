@@ -6,23 +6,30 @@
 
 void start_verificationtest() {
     bool passed = true;
+    real current_err = 0.0;
     real current_val = 0.0;
-    real res = 0.0;
-    for(int i = 2; i <= 10; i++) {
-        res = test_n(i);
-        if(current_val > res) {
+    int test_cases = 10;
+    int results[test_cases];
+    for(int i = 2; i <= test_cases; i++) {
+        results[i-2] = test_n(i);
+    }
+    for(int i = 0; i <= test_cases-2; i++) {
+        current_val = results[i];
+        if(current_err > current_val) {
             passed = false;
             break;
         }
-        current_val = res;
+        current_err = current_val;
     }
+
+    test_n(6);
     if(!rank) {
-        printf("start_verificationtest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
+        printf("start_verificationtest: %s\n", (passed ? "passed" : "failed"));
     }
 }
 
-real test_n(int n) {
-    n = n;
+real test_n(int new_n) {
+    n = new_n;
     m = n - 1;
     real **result = start('t');
     real avg = 0.0;

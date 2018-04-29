@@ -12,7 +12,7 @@ void init_from_to_unittest() {
     int expected_to = m;
     bool passed = expected_from == get_from(rank) && expected_to == get_to(rank);
 
-    printf("init_from_to on process %d: %s\n", rank, (passed ? "passed" : "failed"));
+    printf("init_from_to on: %s\n", (passed ? "passed" : "failed"));
 }
 
 void parallel_transpose_unittest() {
@@ -52,7 +52,7 @@ void parallel_transpose_unittest() {
             expected[i][j] = b[j][i];
         }
     }
-    printf("parallel_transpose_unittest on process %d: %s\n", rank, (passed ? "passed" : "failed"));
+    printf("parallel_transpose_unittest: %s\n", (passed ? "passed" : "failed"));
     //print_arr("expected", expected);
     //print_arr("actual", bt);
 }

@@ -5,9 +5,6 @@
 #include <stdio.h>
 #include <math.h>
 
-MPI_Datatype column;
-MPI_Datatype matrixcolumntype;
-
 void init_transpose() {
     // MPI_Alltoallv params
     sendcounts = (int*) malloc (commsize * sizeof (int));
@@ -17,19 +14,14 @@ void init_transpose() {
 
     for(int i = 0; i < commsize; i++) {
         sendcounts[i] = get_row_count(rank) * m;
-        senddispls[i] = get_from(rank) * m;
-        recvcounts[i] = get_row_count(i);
-        recvdispls[i] = get_from(i);
-   }
-
-    MPI_Type_vector(m, 1, m, MPI_DOUBLE, &column);
-    MPI_Type_commit(&column);
-    MPI_Type_create_resized (column, 0, sizeof(double), &matrixcolumntype);
-    MPI_Type_commit (&matrixcolumntype);
+        senddispls[i] = 0;
+        recvcounts[i] = get_row_count(i) * m;
+        recvdispls[i] = 0;
+    }
 }
 
 void parallel_transpose(real **bt, real **b) {
-    MPI_Alltoallv(b[0], sendcounts, senddispls, MPI_DOUBLE, bt[0], recvcounts, recvdispls, matrixcolumntype, MPI_COMM_WORLD);
+    MPI_Alltoallv(b[get_from(rank)][0], sendcounts, senddispls, MPI_DOUBLE, bt[get_from(rank)][0], recvcounts, recvdispls, MPI_DOUBLE, MPI_COMM_WORLD);
 }
 
 void transpose_destroy() {
