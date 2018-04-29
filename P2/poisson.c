@@ -101,7 +101,13 @@ real** start(char task) {
         }
     }
 
+    double global_max;
+    MPI_Allreduce(&u_max, &global_max, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
+    printf("rank: %d - local max: %lf\n", rank, u_max);
     if(!rank) {
+        printf("Global maximum %lf\n", global_max);
+    }
+    /*if(!rank) {
         int worst_rank = rank;
         int s_rank;
         real max;
@@ -117,7 +123,7 @@ real** start(char task) {
         printf("Worst rank: %d - Value: %lf\n", worst_rank, u_max);
     } else {
         MPI_Send(&u_max, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
-    }
+    }*/
     //printf("u_max = %e\n", u_max);
     return b;
     //free(b);
@@ -137,7 +143,7 @@ void compute(real **bt, real **b, real *grid, real *z[], int nn) {
 #pragma omp parallel for num_threads(numthreads) schedule(static)
     //for (size_t i = 0; i < get_row_count(rank); i++) {
     for (size_t i = (size_t)get_from(rank); i < get_to(rank); i++) {
-    //for (size_t i = 0; i < m; i++) {
+    //  for (size_t i = 0; i < m; i++) {
         fstinv_(bt[i], &n, z[omp_get_thread_num()], &nn);
     }
 }
