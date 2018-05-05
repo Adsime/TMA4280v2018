@@ -4,6 +4,7 @@
 #ifndef MAIN_FILE
 #define MAIN_FILE
 
+#include "timing.h"
 #include "poisson.h"
 #include "unit_tests.h"
 #include "verificationtests.h"
@@ -20,6 +21,7 @@ void print_stuff(real **a, char name[]) {
 }
 
 int main(int argc, char **argv) {
+    time_start();
     init(argc, argv);
     char marg = (char) *argv[3];
     switch(marg) {
@@ -51,7 +53,7 @@ int main(int argc, char **argv) {
             }
             break;
     }
-
+    if(rank == 0) time_stop("Program execution");
     finalize();
     return 0;
 }
